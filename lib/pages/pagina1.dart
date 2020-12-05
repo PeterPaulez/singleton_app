@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:singleton_app/models/usuario.dart';
+import 'package:singleton_app/services/usuario.dart';
 
 class Pagina1Page extends StatelessWidget {
   @override
@@ -8,7 +10,14 @@ class Pagina1Page extends StatelessWidget {
         actions: [],
         title: Text('Pagina 1'),
       ),
-      body: InformacionUsuario(),
+      body: StreamBuilder(
+        stream: usuarioService.usuarioStream,
+        builder: (BuildContext context, AsyncSnapshot<UsuarioModel> snapshot) {
+          return snapshot.hasData
+              ? InformacionUsuario(snapshot.data)
+              : Center(child: Text('No hay usuario seleccionado'));
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.accessibility_new),
         onPressed: () => Navigator.pushNamed(context, 'pagina2'),
@@ -18,6 +27,9 @@ class Pagina1Page extends StatelessWidget {
 }
 
 class InformacionUsuario extends StatelessWidget {
+  final UsuarioModel usuario;
+  const InformacionUsuario(this.usuario);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,11 +45,11 @@ class InformacionUsuario extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            title: Text('Nombre: '),
+            title: Text('Nombre: ${usuario.nombre}'),
             subtitle: Text('Nombre del usuario'),
           ),
           ListTile(
-            title: Text('Edad: '),
+            title: Text('Edad: ${usuario.edad}'),
             subtitle: Text('Edad del usuario'),
           ),
           SizedBox(height: 30),
