@@ -3,5 +3,9 @@ class UsuarioModel {
   int edad;
   List<String> profesiones;
 
-  UsuarioModel({this.nombre, this.edad, this.profesiones});
+  // Default value of constructor
+  UsuarioModel(
+      {this.nombre,
+      this.edad = 43,
+      this.profesiones = const ['Sin profesiones']});
 }
