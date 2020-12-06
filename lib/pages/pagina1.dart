@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:singleton_app/bloc/usuario/cubit.dart';
+import 'package:singleton_app/models/usuario.dart';
 
 class Pagina1Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final usuarioCubit = BlocProvider.of<UsuarioCubit>(context);
     return Scaffold(
       appBar: AppBar(
-        actions: [],
+        actions: [
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () => usuarioCubit.borrarUsuario(),
+          )
+        ],
         title: Text('Pagina 1'),
       ),
-      body: InformacionUsuario(),
+      body: BodyScaffold(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.accessibility_new),
         onPressed: () => Navigator.pushNamed(context, 'pagina2'),
@@ -17,7 +26,42 @@ class Pagina1Page extends StatelessWidget {
   }
 }
 
+class BodyScaffold extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<UsuarioCubit, UsuarioState>(
+      builder: (_, state) {
+        switch (state.runtimeType) {
+          case UsuarioInit:
+            return Center(child: Text('No hay información de usuario'));
+            break;
+          case UsuarioActivo:
+            // Casteamos el state diciendo que es UsuarioActivo y así funka
+            return InformacionUsuario((state as UsuarioActivo).usuario);
+            break;
+          default:
+            return Center(child: Text('Estado no reconocido'));
+        }
+        /*
+        print(state);
+        if (state is UsuarioInit) {
+          return Center(child: Text('No hay información de usuario'));
+        } else if (state is UsuarioActivo) {
+          return InformacionUsuario(state.usuario);
+        } else {
+          // Ponemos el elseIF para ver la info de state, sino no nos deja
+          return Center(child: Text('Estado no reconocido'));
+        }
+        */
+      },
+    );
+  }
+}
+
 class InformacionUsuario extends StatelessWidget {
+  final UsuarioModel usuario;
+  const InformacionUsuario(this.usuario);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,11 +77,11 @@ class InformacionUsuario extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            title: Text('Nombre: '),
+            title: Text('Nombre: ${usuario.nombre}'),
             subtitle: Text('Nombre del usuario'),
           ),
           ListTile(
-            title: Text('Edad: '),
+            title: Text('Edad: ${usuario.edad}'),
             subtitle: Text('Edad del usuario'),
           ),
           SizedBox(height: 30),
@@ -46,18 +90,9 @@ class InformacionUsuario extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           Divider(),
-          ListTile(
-            title: Text('Dentista: '),
-            subtitle: Text('Doctos de los dientes'),
-          ),
-          ListTile(
-            title: Text('Carnicero: '),
-            subtitle: Text('Cortador de carnes'),
-          ),
-          ListTile(
-            title: Text('Futbolista: '),
-            subtitle: Text('Deportista de Fútbol'),
-          ),
+          ...usuario.profesiones
+              .map((profesion) => ListTile(title: Text(profesion)))
+              .toList(),
         ],
       ),
     );
