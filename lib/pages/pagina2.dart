@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:singleton_app/bloc/usuario/bloc.dart';
+import 'package:singleton_app/models/usuario.dart';
 
 class Pagina2Page extends StatelessWidget {
   @override
@@ -14,7 +17,15 @@ class Pagina2Page extends StatelessWidget {
           children: [
             MaterialButton(
               minWidth: 200,
-              onPressed: () {},
+              onPressed: () {
+                final newUser = new UsuarioModel(
+                  nombre: 'Pedro',
+                  edad: 43,
+                  profesiones: ['FullStack Dev', 'Youtuber', 'Gamer'],
+                );
+                BlocProvider.of<UsuarioBloc>(context)
+                    .add(ActivarUsuario(newUser));
+              },
               child: Text(
                 'Establecer Usuario',
                 style: TextStyle(color: Colors.white),
@@ -24,7 +35,9 @@ class Pagina2Page extends StatelessWidget {
             SizedBox(height: 30),
             MaterialButton(
               minWidth: 200,
-              onPressed: () {},
+              onPressed: () {
+                BlocProvider.of<UsuarioBloc>(context).add(CambiarEdad(34));
+              },
               child: Text(
                 'Cambiar Edad',
                 style: TextStyle(color: Colors.white),
@@ -34,7 +47,10 @@ class Pagina2Page extends StatelessWidget {
             SizedBox(height: 30),
             MaterialButton(
               minWidth: 200,
-              onPressed: () {},
+              onPressed: () {
+                BlocProvider.of<UsuarioBloc>(context)
+                    .add(AgregarProfesion('New Profesion '));
+              },
               child: Text(
                 'Añadir Profesión',
                 style: TextStyle(color: Colors.white),
