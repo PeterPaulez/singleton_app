@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:singleton_app/controllers/usuario.dart';
+import 'package:singleton_app/models/usuario.dart';
 
 class Pagina1Page extends StatelessWidget {
   @override
@@ -13,7 +14,7 @@ class Pagina1Page extends StatelessWidget {
       ),
       body: Obx(
         () => usuarioController.existeUsuario.value
-            ? InformacionUsuario()
+            ? InformacionUsuario(usuario: usuarioController.usuario.value)
             : NoUsuario(),
       ),
       floatingActionButton: FloatingActionButton(
@@ -38,6 +39,9 @@ class NoUsuario extends StatelessWidget {
 }
 
 class InformacionUsuario extends StatelessWidget {
+  final UsuarioModel usuario;
+  const InformacionUsuario({Key? key, required this.usuario}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,11 +57,11 @@ class InformacionUsuario extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            title: Text('Nombre: '),
+            title: Text('Nombre: ${this.usuario.nombre}'),
             subtitle: Text('Nombre del usuario'),
           ),
           ListTile(
-            title: Text('Edad: '),
+            title: Text('Edad: ${this.usuario.edad}'),
             subtitle: Text('Edad del usuario'),
           ),
           SizedBox(height: 30),

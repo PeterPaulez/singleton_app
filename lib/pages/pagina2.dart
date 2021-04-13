@@ -34,7 +34,9 @@ class Pagina2Page extends StatelessWidget {
             SizedBox(height: 30),
             MaterialButton(
               minWidth: 200,
-              onPressed: () {},
+              onPressed: () {
+                usuarioController.cambiarEdad(34);
+              },
               child: Text(
                 'Cambiar Edad',
                 style: TextStyle(color: Colors.white),
