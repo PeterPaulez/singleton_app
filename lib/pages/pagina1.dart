@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:singleton_app/controllers/usuario.dart';
 
 class Pagina1Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final usuarioController = Get.put(UsuarioController());
     return Scaffold(
       appBar: AppBar(
         actions: [],
         title: Text('Pagina 1'),
       ),
-      body: InformacionUsuario(),
+      body: Obx(
+        () => usuarioController.existeUsuario.value
+            ? InformacionUsuario()
+            : NoUsuario(),
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.accessibility_new),
         //onPressed: () => Navigator.pushNamed(context, 'pagina2'),
@@ -18,6 +24,15 @@ class Pagina1Page extends StatelessWidget {
           'edad': 43,
         }),
       ),
+    );
+  }
+}
+
+class NoUsuario extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Center(child: Text('No hay usuario seleccionado')),
     );
   }
 }
