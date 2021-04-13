@@ -24,6 +24,10 @@ class Pagina2Page extends StatelessWidget {
                   nombre: 'Pedro',
                   edad: 43,
                 ));
+                Get.snackbar(
+                  'New user',
+                  'Pedro is 43 years old',
+                );
               },
               child: Text(
                 'Establecer Usuario',
@@ -31,7 +35,7 @@ class Pagina2Page extends StatelessWidget {
               ),
               color: Colors.blue,
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 15),
             MaterialButton(
               minWidth: 200,
               onPressed: () {
@@ -43,7 +47,7 @@ class Pagina2Page extends StatelessWidget {
               ),
               color: Colors.blue,
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 15),
             MaterialButton(
               minWidth: 200,
               onPressed: () {
@@ -53,6 +57,19 @@ class Pagina2Page extends StatelessWidget {
               },
               child: Text(
                 'Añadir Profesión',
+                style: TextStyle(color: Colors.white),
+              ),
+              color: Colors.blue,
+            ),
+            SizedBox(height: 15),
+            MaterialButton(
+              minWidth: 200,
+              onPressed: () {
+                Get.changeTheme(
+                    (Get.isDarkMode) ? ThemeData.light() : ThemeData.dark());
+              },
+              child: Text(
+                'Cambiar Tema',
                 style: TextStyle(color: Colors.white),
               ),
               color: Colors.blue,
