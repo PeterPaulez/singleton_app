@@ -70,6 +70,15 @@ class InformacionUsuario extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           Divider(),
+
+          // No podemos devolver una lista sin mas, sino que debe ser desestructurada
+          ...usuario.profesiones.map(
+            (profesion) => ListTile(
+              title: Text(profesion),
+              subtitle: Text('yeahhhh'),
+            ),
+          )
+          /*
           ListTile(
             title: Text('Dentista: '),
             subtitle: Text('Doctos de los dientes'),
@@ -82,6 +91,7 @@ class InformacionUsuario extends StatelessWidget {
             title: Text('Futbolista: '),
             subtitle: Text('Deportista de Fútbol'),
           ),
+          */
         ],
       ),
     );

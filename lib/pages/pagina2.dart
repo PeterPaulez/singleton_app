@@ -46,7 +46,11 @@ class Pagina2Page extends StatelessWidget {
             SizedBox(height: 30),
             MaterialButton(
               minWidth: 200,
-              onPressed: () {},
+              onPressed: () {
+                usuarioController.agregarProfesion(
+                  'Profesión #${usuarioController.profesionesCount + 1}',
+                );
+              },
               child: Text(
                 'Añadir Profesión',
                 style: TextStyle(color: Colors.white),
