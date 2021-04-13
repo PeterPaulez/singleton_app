@@ -3,5 +3,9 @@ class UsuarioModel {
   int edad;
   List<String> profesiones;
 
-  UsuarioModel({this.nombre, this.edad, this.profesiones});
+  UsuarioModel({
+    required this.nombre,
+    required this.edad,
+    this.profesiones = const [],
+  });
 }
